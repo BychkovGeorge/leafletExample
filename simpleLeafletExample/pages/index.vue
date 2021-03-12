@@ -1,21 +1,25 @@
 <template>
-  <main class="col-12 container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-6">
+  <main class="col-12 container pt-5 position-relative" style="background: linear-gradient(#35495e, #3b8070); height: 100vh">
+    <div class="row justify-content-center position-absolute w-100" style="top: 20%">
+      <div class="col-12">
+        <h1 class="text-center mb-5" style="color: #ECEFF1">Добавление меток на карту</h1>
+      </div>
+      <div class="col-5 mr-4 card-container">
+        <p class="text-center" style="color: #ECEFF1; font-weight: 700; font-size: 20px">Введите название метки и её координаты для отображения на карте</p>
         <div>
-          <b-form-group label="Название метки" label-for="name">
+          <b-form-group label="Название метки" label-for="name" style="color: #ECEFF1">
             <b-form-input v-model="name" id="name" type="text" placeholder="Введите название метки"></b-form-input>
           </b-form-group>
-          <b-form-group label="Широта" label-for="latitude">
+          <b-form-group label="Широта" label-for="latitude" style="color: #ECEFF1">
             <b-form-input v-model="latitude" id="latitude" type="number" placeholder="Введите широту"></b-form-input>
           </b-form-group>
-          <b-form-group label="Долгота" label-for="longitude">
+          <b-form-group label="Долгота" label-for="longitude" style="color: #ECEFF1">
             <b-form-input v-model="longitude" id="longitude" type="number" placeholder="Введите долготу"></b-form-input>
           </b-form-group>
-          <button @click="addLabel" class="btn btn-primary">Добавить</button>
+          <button @click="addLabel" class="btn btn-light mt-2">Добавить</button>
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-5 ml-4 card-container">
         <l-map
           id="map"
           :zoom="zoom"
@@ -154,3 +158,12 @@ export default {
   },
 }
 </script>
+
+<style>
+.card-container {
+  padding: 1.5rem;
+  border: 1px solid #ECEFF1;
+  border-radius: 6px;
+  box-shadow: rgba(0, 7, 0, .9);
+}
+</style>
