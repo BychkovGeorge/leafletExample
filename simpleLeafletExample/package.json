@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt --open -p 2288",
+    "dev": "nuxt --open -p 3000",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"

@@ -8,13 +8,13 @@
         <p class="text-center" style="color: #ECEFF1; font-weight: 700; font-size: 20px">Введите название метки и её координаты для отображения на карте</p>
         <div>
           <b-form-group label="Название метки" label-for="name" style="color: #ECEFF1">
-            <b-form-input v-model="name" id="name" type="text" placeholder="Введите название метки"></b-form-input>
+            <b-form-input v-model="formData.name" id="name" type="text" placeholder="Введите название метки"></b-form-input>
           </b-form-group>
           <b-form-group label="Широта" label-for="latitude" style="color: #ECEFF1">
-            <b-form-input v-model="latitude" id="latitude" type="number" placeholder="Введите широту"></b-form-input>
+            <b-form-input v-model="formData.latitude" id="latitude" type="number" placeholder="Введите широту"></b-form-input>
           </b-form-group>
           <b-form-group label="Долгота" label-for="longitude" style="color: #ECEFF1">
-            <b-form-input v-model="longitude" id="longitude" type="number" placeholder="Введите долготу"></b-form-input>
+            <b-form-input v-model="formData.longitude" id="longitude" type="number" placeholder="Введите долготу"></b-form-input>
           </b-form-group>
           <button @click="addLabel" class="btn btn-light mt-2">Добавить</button>
         </div>
@@ -61,27 +61,27 @@ export default {
 
   data() {
     return {
-      name: '',
-      latitude: '',
-      longitude: '',
+      formData: {
+        name: '', // название точки на карте
+        latitude: '', // широта
+        longitude: '', // долгота
+      },
       zoom: 13,
-      center: latLng(47.41322, -1.219482),
-      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      center: latLng(47.41322, -1.219482), // начальное положение центра карты
+      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png', // ссылка на карту
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      withPopup: latLng(47.41322, -1.219482),
-      withTooltip: latLng(47.41422, -1.250482),
       currentZoom: 11.5,
       currentCenter: latLng(47.41322, -1.219482),
       showParagraph: false,
       mapOptions: {
         zoomSnap: 0.5
       },
-      worker: null,
-      labels: [],
+      worker: null, // web-worker
+      labels: [], // массив точек на карте
       tooltipOptions: {
         permanent: true,
       },
-      clock: null,
+      clock: null, // время добавления новой точки и таймер для удаления точкии через 15 секунд
       timer: null,
     };
   },
@@ -105,23 +105,23 @@ export default {
         return;
       }
       this.worker.postMessage({
-        'name': this.name,
-        'latitude': this.latitude,
-        'longitude': this.longitude
+        'name': this.formData.name,
+        'latitude': this.formData.latitude,
+        'longitude': this.formData.longitude
       });
     },
 
     validateForm() {
-      if (this.name.length < 3) {
-        this.name = '';
-        this.latitude = '';
-        this.longitude = '';
+      if (this.formData.name.length < 3) {
+        this.formData.name = '';
+        this.formData.latitude = '';
+        this.formData.longitude = '';
         return -1;
       }
-      else if (this.name.length > 75) {
-        this.name = '';
-        this.latitude = '';
-        this.longitude = '';
+      else if (this.formData.name.length > 75) {
+        this.formData.name = '';
+        this.formData.latitude = '';
+        this.formData.longitude = '';
         return 1;
       }
       else {
